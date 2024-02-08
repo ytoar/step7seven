@@ -10,9 +10,10 @@ class Product extends Model
 {
     public function getList($keyword, $company_search){
         $products = DB::table('products')
-           ->join('companies', 'products.company_id', '=', 'companies.id')
-           ->select('products.*', 'companies.company_name');
+            ->join('companies','products.company_id','=','companies.id')
+            ->select('products.*','companies.company_name');
 
+        
         if($keyword){
             $products->where('products.product_name', 'like', "%{$keyword}%");
         }
@@ -21,6 +22,7 @@ class Product extends Model
         }
 
         $productsList = $products->get();
+        
         return $productsList;
     }
 
