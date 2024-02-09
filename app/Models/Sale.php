@@ -21,4 +21,8 @@ class Sale extends Model
             'comment' => $data->comment,
         ]);
     }
+
+    protected $table = 'sales';
+    protected $dates =  ['created_at', 'updated_at'];
+    protected $fillable = ['id', 'company_id', 'product_name','price','stock','comment','img_path'];
 }
