@@ -56,43 +56,63 @@
                                 <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                             @endforeach
                         </select>
+
+                        <div class="stock.serach">
+                            <label for="stock">{{ __('在庫数') }}</label>
+                            <div class="jougen">
+                                <p>{{ __('上限') }}</p>
+                                <input type="number" name="jougenstock" id="jougenstock" >
+                            </div>
+
+                            <div class="kagen">
+                                <p>{{ __('下限') }}</p>
+                                <input type="number" name="kagenstock" id="kagenstock" >
+                            </div>
+                        </div>
+
                         <input type="submit" value="検索">
                         
                     </div>
                 </form>
                 
-  <table>
-     <thead>
-        <tr>
-            <th>ID</th>
-            <th>商品画像</th>
-            <th>商品名</th>
-            <th>価格</th>
-            <th>在庫数</th>
-            <th>メーカー名</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach ($products as $product)
-        <tr>
-            <td>{{ $product->id }}</td>
-            <td><img src="{{ asset($product->img_path) }}" alt="" width="100px"></td>
-            <td>{{ $product->product_name }}</td>
-            <td>{{ $product->price }}</td>
-            <td>{{ $product->stock }}</td>
-            <td>{{ $product->comment }}</td>
-            <td>{{ $product->company_name }}</td>
-            <td><input type="button" value="詳細" onclick="location.href='{{ route('detail', ['id' => $product->id]) }}'" class="btn btn-primary"></td>
-            <td>
-                <form action="{{ route('delete', ['id' => $product->id]) }}" method="get">
-                    @csrf
-                    <input type="submit" class="btn btn-danger delete-btn" value="削除" data-delete-id="">
-                </form>
-            </td>
-        </tr>
-    @endforeach
-    </tbody>
-  </table>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>商品画像</th>
+                <th>商品名</th>
+                <th>価格</th>
+                <th>在庫数</th>
+                <th>メーカー名</th>
+                <!-- <th>@sortablelink('id', 'ID')</th>
+                <th>商品画像</th>
+                <th>@sortablelink('product_name', '商品名')</th>
+                <th>@sortablelink('company_name', 'メーカー')</th>
+                <th>@sortablelink('price', '価格')</th>
+                <th>@sortablelink('stock', '在庫数')</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($products as $product)
+            <tr>
+                <td>{{ $product->id }}</td>
+                <td><img src="{{ asset($product->img_path) }}" alt="" width="100px"></td>
+                <td>{{ $product->product_name }}</td>
+                <td>{{ $product->price }}</td>
+                <td>{{ $product->stock }}</td>
+                <td>{{ $product->comment }}</td>
+                <td>{{ $product->company_name }}</td>
+                <td><input type="button" value="詳細" onclick="location.href='{{ route('detail', ['id' => $product->id]) }}'" class="btn btn-primary"></td>
+                <td>
+                    <form action="{{ route('delete', ['id' => $product->id]) }}" method="get">
+                        @csrf
+                        <input type="submit" class="btn btn-danger delete-btn" value="削除" data-delete-id="">
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
     </body>
 </html>
