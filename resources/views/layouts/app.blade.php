@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>@yield('title')</title>
 </head>
@@ -14,6 +15,27 @@
     </div>
 
     <script>
+
+        $(function() {
+            $('#delete').on('click', function() {
+                var deleteConfirm = confirm('削除スタート');
+                $.ajaxSetup({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                });
+                var url = 'delete'
+                $.ajax({
+                    url: 'url',
+                    type: 'GET'
+                }).done(function (results) {
+                    //通信が成功したときの処理
+                    var deleteConfirm = confirm('削除しました');
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    //通信が失敗したときの処理
+                    var deleteConfirm = confirm('削除に失敗しました');
+                });
+            });
+        });
+
         $("#search").change(function(){
             $.ajax({
                 type:"GET",

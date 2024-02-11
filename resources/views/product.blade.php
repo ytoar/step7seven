@@ -117,7 +117,7 @@
                 <td>
                     <form action="{{ route('delete', ['id' => $product->id]) }}" method="get">
                         @csrf
-                        <input type="submit" class="btn btn-danger delete-btn" value="削除" data-delete-id="">
+                        <input id="delete" type="submit" class="btn btn-danger delete-btn" value="削除" data-delete-id="">
                     </form>
                 </td>
             </tr>
