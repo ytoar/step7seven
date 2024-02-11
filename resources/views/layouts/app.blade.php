@@ -12,5 +12,24 @@
     <div class="container">
         @yield('content')
     </div>
+
+    <script>
+        $("#search").change(function(){
+            $.ajax({
+                type:"GET",
+                url:"{{ route('list') }}",
+                dataType: 'json',
+            })
+            .done(function(json){
+                alert('ajax成功');
+            })
+            .fail(function(){
+                alert('ajax失敗');
+            })
+            .always(function(){
+                //通信の成功と失敗に関わらず実行される処理
+            });
+        });
+    </script>
 </body>
 </html>

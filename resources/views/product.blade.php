@@ -51,26 +51,37 @@
                     <div>
                         <input type="text" name="keyword" placeholder="商品名">
                         <select name="company_search" id="">
-                            <option value="">選択してください</option>
+                            <option value="">メーカーを選択してください</option>
                             @foreach ($companies as $company)
                                 <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                             @endforeach
                         </select>
 
-                        <div class="stock.serach">
+                        <input type="submit" value="検索">
+
+                        <div class="price_search">
+                            <label for="price">{{ __('価格') }}</label>
+                            <div class="jougen">
+                                <p>{{ __('上限') }}</p>
+                                <input type="number" name="jougenprice" id="jougenprice" >
+                            </div>
+                            <div class="kagen">
+                                <p>{{ __('下限') }}</p>
+                                <input type="number" name="kagenprice" id="kagenprice" >
+                            </div>
+                        </div>
+
+                        <div class="stock_serach">
                             <label for="stock">{{ __('在庫数') }}</label>
                             <div class="jougen">
                                 <p>{{ __('上限') }}</p>
                                 <input type="number" name="jougenstock" id="jougenstock" >
                             </div>
-
                             <div class="kagen">
                                 <p>{{ __('下限') }}</p>
                                 <input type="number" name="kagenstock" id="kagenstock" >
                             </div>
                         </div>
-
-                        <input type="submit" value="検索">
                         
                     </div>
                 </form>
