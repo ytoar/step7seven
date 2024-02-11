@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Product extends Model
 {
+    use Sortable;
+    
     public function getList($keyword, $company_search){
         $products = DB::table('products')
             ->join('companies','products.company_id','=','companies.id')
