@@ -24,8 +24,7 @@ class ProductController extends Controller
         return view('product', ['products' => $products, 'companies' => $companies]);
     }
 
-    public function index()
-    {
+    public function index(){
         $products = Product::sortable()->get(); //sortable() を先に宣言
         return view('products.index')->with('products', $products);
     }
