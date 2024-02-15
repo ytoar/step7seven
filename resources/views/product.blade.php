@@ -98,9 +98,10 @@
                 <th>@sortablelink('id', 'ID')</th>
                 <th>商品画像</th>
                 <th>@sortablelink('product_name', '商品名')</th>
-                <th>@sortablelink('company_name', 'メーカー')</th>
                 <th>@sortablelink('price', '価格')</th>
                 <th>@sortablelink('stock', '在庫数')</th>
+                <th>@sortablelink('comment', 'コメント')</th>
+                <th>@sortablelink('company_name', 'メーカー')</th>
             </tr>
         </thead>
         <tbody>
