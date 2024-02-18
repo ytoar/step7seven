@@ -17,7 +17,7 @@
     <script>
 
         $(function() {
-            $('#delete').on('click', function() {
+            $('.delete').on('click', function() {
                 var deleteConfirm = confirm('削除スタート');
                 $.ajaxSetup({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
@@ -40,7 +40,7 @@
             $.ajax({
                 type:"GET",
                 url:"{{ route('list') }}",
-                dataType: 'json',
+                data:JSON,
             })
             .done(function(json){
                 alert('ajax成功');
