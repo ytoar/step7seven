@@ -39,33 +39,42 @@ class ProductController extends Controller
 
         // トランザクション開始
         DB::beginTransaction();
+
+        $image = $request->file('img_path');
+        if($image){
+            $filename = $image->getClientOriginalName();
+            $image->storeAs('public/images', $filename);
+            $img_path = 'storage/images/'.$filename;
+        }else{
+            $img_path = '';
+        }
     
         try {
             // 登録処理呼び出し
             $model = new Product();
-            $model->registProduct($request);
+            $model->registProduct($request, $img_path);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
             return back();
         }
 
-        try{
-            $image = $request->file('img_path');
-            if($image){
-                $filename = $image->getClientOriginalName();
-                $image->storeAs('public/images', $filename);
-                $img_path = 'storage/images/'.$filename;
-                $model->registEdit($request, $img_path, $id);
-            }else{
-                $model->registEditNoImg($request, $id);
-            }
-            DB::commit();
-            return redirect(route('detail', ['id' => $id]));
-        }catch(Exception $e){
-            DB::rollBack();
-            return back();
-        }
+        // try{
+        //     $image = $request->file('img_path');
+        //     if($image){
+        //         $filename = $image->getClientOriginalName();
+        //         $image->storeAs('public/images', $filename);
+        //         $img_path = 'storage/images/'.$filename;
+        //         $model->registEdit($request, $img_path, $id);
+        //     }else{
+        //         $model->registEditNoImg($request, $id);
+        //     }
+        //     DB::commit();
+        //     return redirect(route('detail', ['id' => $id]));
+        // }catch(Exception $e){
+        //     DB::rollBack();
+        //     return back();
+        // }
 
         // 処理が完了したらregistにリダイレクト
         return redirect(route('regist'))->with('success','商品が登録されました！');

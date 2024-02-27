@@ -4,6 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        @vite(['resources/saas/app.scss', 'resources/css/product.css', 'resources/js/app.js', 'resources/js/product.js'])
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
+
+
         <title>Laravel</title>
 
         <!-- Fonts -->
@@ -47,7 +53,7 @@
 
                 <div class="product2">
                 <button onclick="location.href='{{ route('regist') }}'" class="btn btn-warning">新規登録</button>
-                <form action="{{ route('list') }}" method="get">
+                <form action="{{ route('list') }}" method="get" id="search-form">
                     <div>
                         <input type="text" name="keyword" placeholder="商品名">
                         <select name="company_search" id="">
@@ -57,7 +63,7 @@
                             @endforeach
                         </select>
 
-                        <input type="submit" value="検索">
+                        <input type="submit" value="検索" id="search">
 
                         <div class="price_search">
                             <label for="price">{{ __('価格') }}</label>
@@ -85,8 +91,9 @@
                         
                     </div>
                 </form>
-                
-    <table class="table table-striped">
+      
+    <div id="product-table">            
+    <table class="table table-striped" id="tableproduct">
         <thead>
             <tr>
                 <!-- <th>ID</th>
@@ -118,13 +125,14 @@
                 <td>
                     <form action="{{ route('delete', ['id' => $product->id]) }}" method="get">
                         @csrf
-                        <input id="delete" type="submit" class="btn btn-danger delete-btn" value="削除" data-delete-id="">
+                        <input id="delete" type="submit" class="btn btn-danger delete-btn" value="削除" data-delete-id="{{ $product->id }}">
                     </form>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+    </div>
 </div>
     </body>
 </html>

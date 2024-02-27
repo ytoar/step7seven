@@ -12,8 +12,8 @@ class Product extends Model
     use Sortable;
     
     public function getList($keyword, $company_search){
-        $products = DB::table('products')
-            ->join('companies','products.company_id','=','companies.id')
+        $products = Product::
+            join('companies','products.company_id','=','companies.id')
             ->select('products.*','companies.company_name');
 
         
@@ -24,12 +24,12 @@ class Product extends Model
             $products->where('products.company_id', '=', $company_search);
         }
 
-        $productsList = $products->get();
+        $productsList = $products->sortable()->get();
         
         return $productsList;
     }
 
-    public function registProduct($data) {
+    public function registProduct($data, $img_path) {
         // 登録処理
         DB::table('products')->insert([
             'product_name' => $data->input('product_name'),
@@ -37,6 +37,7 @@ class Product extends Model
             'price' => $data->input('price'),
             'stock' => $data->input('stock'),
             'comment' => $data->input('comment'),
+            'img_path' => $img_path
         ]);
     }
 

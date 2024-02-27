@@ -27,6 +27,6 @@ Route::post('/regist',[App\Http\Controllers\ProductController::class, 'registSub
 Route::get('/delete/{id}',[App\Http\Controllers\ProductController::class, 'deleteProduct'])->name('delete');
 Route::get('/edit/{id}', [App\Http\Controllers\ProductController::class, 'showEdit'])->name('edit');
 Route::post('/edit/{id}', [App\Http\Controllers\ProductController::class, 'registEdit'])->name('registEdit');
-Route::delete('/products/{id}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('destroy');
+Route::delete('/products/{id}', [App\Http\Controllers\ProductController::class, 'deleteProduct'])->name('destroy');
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\ProductController::class, 'showList'])->name('home');

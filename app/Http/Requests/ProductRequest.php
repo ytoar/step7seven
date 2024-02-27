@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'product_name' => 'required | max:255',
-            'company-area' => 'required',
+            'company_id' => 'required',
             'price' => 'max:10000 | required',
             'stock' => 'max:10000 | required',
             'comment' => 'max:10000',
@@ -36,7 +36,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'product_name' => '商品名',
-            'company-area' => 'メーカー名',
+            'company_id' => 'メーカー名',
             'price' => '価格',
             'stock' => '在庫',
             'comment' => 'コメント',
@@ -47,7 +47,7 @@ class ProductRequest extends FormRequest
         return [
             'product_name.required' => ':attributeは必須項目です。',
             'product_name.max' => ':attributeは:max字以内で入力してください。',
-            'company-area.required' => ':attributeは必須項目です。',
+            'company_id.required' => ':attributeは必須項目です。',
             'price.max' => ':attributeは:max字以内で入力してください。',
             'price.required' => ':attributeは必須項目です。',
             'stock.max' => ':attributeは:max字以内で入力してください。',
