@@ -11,7 +11,7 @@ class Product extends Model
 {
     use Sortable;
     
-    public function getList($keyword, $company_search){
+    public function getList($keyword, $company_search, $jougenprice, $kagenprice, $jougenstock, $kagenstock){
         $products = Product::
             join('companies','products.company_id','=','companies.id')
             ->select('products.*','companies.company_name');
@@ -22,6 +22,16 @@ class Product extends Model
         }
         if($company_search){
             $products->where('products.company_id', '=', $company_search);
+        }
+        if($jougenprice){
+            $products->where('price','>',$jougenprice);
+        }elseif($kagenprice){
+            $products->where('price','<',$kagenprice);
+        }
+        if($jougenstock){
+            $products->where('stock', '>', $jougenstock);
+        }elseif($kagenstock){
+            $products->where('stock', '<', $kagenstock);
         }
 
         $productsList = $products->sortable()->get();

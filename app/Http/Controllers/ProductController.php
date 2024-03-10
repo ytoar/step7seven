@@ -15,9 +15,13 @@ class ProductController extends Controller
     public function showList(Request $request) {
         $keyword = $request->input('keyword');
         $company_search = $request->input('company_search');
+        $jougenprice = $request->input('jougenprice');
+        $kagenprice = $request->input('kagenprice');
+        $jougenstock = $request->input('jougenstock');
+        $kagenstock = $request->input('kagenstock');
 
         $model = new Product();
-        $products = $model->getList($keyword, $company_search);
+        $products = $model->getList($keyword, $company_search, $jougenprice, $kagenprice, $jougenstock, $kagenstock);
         $company_model = new Company();
         $companies = DB::table('companies')->get();
 
@@ -58,23 +62,6 @@ class ProductController extends Controller
             DB::rollback();
             return back();
         }
-
-        // try{
-        //     $image = $request->file('img_path');
-        //     if($image){
-        //         $filename = $image->getClientOriginalName();
-        //         $image->storeAs('public/images', $filename);
-        //         $img_path = 'storage/images/'.$filename;
-        //         $model->registEdit($request, $img_path, $id);
-        //     }else{
-        //         $model->registEditNoImg($request, $id);
-        //     }
-        //     DB::commit();
-        //     return redirect(route('detail', ['id' => $id]));
-        // }catch(Exception $e){
-        //     DB::rollBack();
-        //     return back();
-        // }
 
         // 処理が完了したらregistにリダイレクト
         return redirect(route('regist'))->with('success','商品が登録されました！');
