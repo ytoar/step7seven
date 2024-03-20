@@ -5,50 +5,54 @@ function loadSort(){
     $('#tableproduct').tablesorter();
 };
 
-$(document).on('click', '#search', function(e) {
-    e.preventDefault();
-    console.log('読み込みOK');
-    console.log('検索開始');
-    let formData = $('#search-form').serialize();
-    $.ajax({
-        type: "GET",
-        url: 'list',
-        data: formData,
-        dataType: 'html',
-    }).done(function(data) {
-        let newTable = $(data).find('#product-table');
-        $('#product-table').html(newTable);
-        console.log('ajax成功');
+$(document).ready(function() {
+    $('#search-form').submit(function(e) {
+        e.preventDefault();
+        console.log('検索開始');
+        let formData = $(this).serialize();
+        $.ajax({
+            type: "GET",
+            url: 'list',
+            data: formData,
+            dataType: 'html',
+            success: function(data) {
+                let newTable = $(data).find('#product-table');
+                $('#product-table').html(newTable);
+                console.log('ajax成功');
+            },
+            error: function() {
+                console.log('ajax失敗');
+            }
+        });
+    });
 
-        // 削除ボタンのイベントを再度バインドする
-        $('.delete-btn').off('click').on('click', function(e) {
-            e.preventDefault();
-            var deleteConfirm = confirm('削除スタート');
-            if (deleteConfirm) {
-                let clickEle = $(this);
-                let deleteId = clickEle.data('delete-id');
-                console.log(deleteId);
-                $.ajaxSetup({
-                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
-                });
-                $.ajax({
-                    url: 'products/' + deleteId,
-                    type: 'POST',
-                    data: { '_method': 'DELETE' }
-                }).done(function(results) {
+    $(document).on('click', '.delete-btn', function(e) {
+        e.preventDefault();
+        var deleteConfirm = confirm('削除スタート');
+        if (deleteConfirm) {
+            let clickEle = $(this);
+            let deleteId = clickEle.data('delete-id');
+            console.log(deleteId);
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+            });
+            $.ajax({
+                url: 'products/' + deleteId,
+                type: 'POST',
+                data: { '_method': 'DELETE' },
+                success: function(results) {
                     // 通信が成功したときの処理
                     let target = clickEle.parents('tr');
                     target.remove();
                     var deleteConfirm = confirm('削除しました');
-                }).fail(function(jqXHR, textStatus, errorThrown) {
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
                     // 通信が失敗したときの処理
                     var deleteConfirm = confirm('削除に失敗しました');
-                });
-            } else {
-                console.log('削除キャンセル');
-            }
-        });
-    }).fail(function() {
-        console.log('ajax失敗');
+                }
+            });
+        } else {
+            console.log('削除キャンセル');
+        }
     });
 });

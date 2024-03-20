@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Sale;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
     public function purchase(Request $request){
+        DB::beginTransaction();
+
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity',1);
 
@@ -24,6 +27,10 @@ class SaleController extends Controller
 
         $product->stock -= $quantity;
         $product->save();
+
+        $sale = new Sale(['product_id' => $productId,]);
+
+        $sale->save();
 
         return response()->json(['message'=>'購入成功！']);
     }

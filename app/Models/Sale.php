@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
+    use HasFactory;
+
+    protected $table = 'sales';
+    protected $dates =  ['created_at', 'updated_at'];
+    protected $fillable = ['id', 'company_id', 'product_name','price','stock','comment','img_path'];
+
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
+    
     public function getList(){
         $sales = DB::table('sales')->get();
         return $sales;
@@ -23,9 +33,4 @@ class Sale extends Model
             'comment' => $data->input('comment'),
         ]);
     }
-
-    protected $table = 'sales';
-    protected $dates =  ['created_at', 'updated_at'];
-    protected $fillable = ['id', 'company_id', 'product_name','price','stock','comment','img_path'];
-
 }
