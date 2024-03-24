@@ -12,12 +12,12 @@ class Sale extends Model
 
     protected $table = 'sales';
     protected $dates =  ['created_at', 'updated_at'];
-    protected $fillable = ['id', 'company_id', 'product_name','price','stock','comment','img_path'];
+    protected $fillable = ['id', 'product_id', 'created_at', 'updated_at'];
 
     public function product(){
         return $this->belongsTo(Product::class);
     }
-    
+
     public function getList(){
         $sales = DB::table('sales')->get();
         return $sales;
