@@ -23,15 +23,15 @@ class Product extends Model
         if($company_search){
             $products->where('products.company_id', '=', $company_search);
         }
-        if($jougenprice){
-            $products->where('price','>',$jougenprice);
-        }elseif($kagenprice){
-            $products->where('price','<',$kagenprice);
+        if(isset($jougenprice)){
+            $products->where('price','<=',$jougenprice);
+        }elseif(isset($kagenprice)){
+            $products->where('price','>=',$kagenprice);
         }
-        if($jougenstock){
-            $products->where('stock', '>', $jougenstock);
-        }elseif($kagenstock){
-            $products->where('stock', '<', $kagenstock);
+        if(isset($jougenstock)){
+            $products->where('stock', '<=', $jougenstock);
+        }elseif(isset($kagenstock)){
+            $products->where('stock', '>=', $kagenstock);
         }
 
         $productsList = $products->sortable()->get();
